@@ -6,13 +6,13 @@ fn read_input() -> Vec<(i64, i64)> {
     input
         .split(",")
         .map(|pair| {
-            let mut it = pair.split("-").map(|s| s.parse::<i64>().unwrap());
-            (it.next().unwrap(), it.next().unwrap())
+            let (start, end) = pair.split_once("-").unwrap();
+            (start.parse().unwrap(), end.parse().unwrap())
         })
         .collect()
 }
 
-fn is_invalid(i: i64) -> bool {
+fn is_invalid_part1(i: i64) -> bool {
     let str_version = format!("{}", i);
     let length = str_version.len();
     if length % 2 == 0 {
@@ -24,27 +24,13 @@ fn is_invalid(i: i64) -> bool {
     }
 }
 
-fn sum_invalid(start: i64, finish: i64) -> i64 {
-    (start..=finish).filter(|i| is_invalid(*i)).sum()
-}
-
-fn part1(input: &[(i64, i64)]) {
-    let result: i64 = input
-        .iter()
-        .map(|(start, finish)| sum_invalid(*start, *finish))
-        .sum();
-
-    println!("Part1: {}", result);
-}
-
 fn is_invalid_part2(i: i64) -> bool {
     let str_version: Vec<char> = format!("{}", i).chars().collect();
     let length = str_version.len();
     for chunk_size in 1..length {
         if length % chunk_size == 0 {
-            let mut chunk_iter = str_version.chunks(chunk_size);
-            let first = chunk_iter.next().unwrap();
-            if chunk_iter.all(|item| item == first) {
+            let first = &str_version[..chunk_size];
+            if str_version.chunks(chunk_size).all(|item| item == first) {
                 return true;
             }
         }
@@ -52,21 +38,18 @@ fn is_invalid_part2(i: i64) -> bool {
     false
 }
 
-fn sum_invalid_part2(start: i64, finish: i64) -> i64 {
-    (start..=finish).filter(|i| is_invalid_part2(*i)).sum()
-}
-
-fn part2(input: &[(i64, i64)]) {
-    let result: i64 = input
+fn solve(input: &[(i64, i64)], predicate: impl Fn(i64) -> bool) -> i64 {
+    input
         .iter()
-        .map(|(start, finish)| sum_invalid_part2(*start, *finish))
-        .sum();
-
-    println!("Part2: {}", result);
+        .map(|&(start, finish)| (start..=finish).filter(|&i| predicate(i)).sum::<i64>())
+        .sum()
 }
 
 fn main() {
     let input = read_input();
-    part1(&input);
-    part2(&input);
+    let part1 = solve(&input, &is_invalid_part1);
+    println!("part1: {}", part1);
+
+    let part2 = solve(&input, &is_invalid_part2);
+    println!("part2: {}", part2);
 }
