@@ -13,7 +13,7 @@ fn read_input() -> Vec<(i64, i64)> {
 }
 
 fn is_invalid_part1(i: i64) -> bool {
-    let str_version = format!("{}", i);
+    let str_version = i.to_string();
     let length = str_version.len();
     if length % 2 == 0 {
         let mid = length / 2;
@@ -25,12 +25,12 @@ fn is_invalid_part1(i: i64) -> bool {
 }
 
 fn is_invalid_part2(i: i64) -> bool {
-    let str_version: Vec<char> = format!("{}", i).chars().collect();
-    let length = str_version.len();
-    for chunk_size in 1..length {
+    let chars: Vec<char> = i.to_string().chars().collect();
+    let length = chars.len();
+    for chunk_size in 1..=(length/2) {
         if length % chunk_size == 0 {
-            let first = &str_version[..chunk_size];
-            if str_version.chunks(chunk_size).all(|item| item == first) {
+            let first = &chars[..chunk_size];
+            if chars.chunks(chunk_size).all(|item| item == first) {
                 return true;
             }
         }
