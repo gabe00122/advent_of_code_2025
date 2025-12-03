@@ -24,7 +24,6 @@ fn part1(input: &[i32]) -> i32 {
     hit_zero
 }
 
-
 fn part2(input: &[i32]) -> i32 {
     let mut x = 50;
     let mut passed_zero = 0;
@@ -33,7 +32,7 @@ fn part2(input: &[i32]) -> i32 {
         let starts_at_zero = x == 0;
 
         x += turn;
-        if x<= 0 {
+        if x <= 0 {
             passed_zero += -x / 100 + if starts_at_zero { 0 } else { 1 };
         } else {
             passed_zero += x / 100;
