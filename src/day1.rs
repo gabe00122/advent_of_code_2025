@@ -29,16 +29,9 @@ fn part2(input: &[i32]) -> i32 {
     let mut passed_zero = 0;
 
     for &turn in input {
-        let starts_at_zero = x == 0;
-
-        x += turn;
-        if x <= 0 {
-            passed_zero += -x / 100 + if starts_at_zero { 0 } else { 1 };
-        } else {
-            passed_zero += x / 100;
-        }
-
-        x = x.rem_euclid(100);
+        let next_x = x + turn;
+        passed_zero += (next_x / 100).abs() + i32::from(x != 0 && next_x <= 0);
+        x = next_x.rem_euclid(100);
     }
 
     passed_zero
