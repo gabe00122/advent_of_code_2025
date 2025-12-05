@@ -26,7 +26,7 @@ fn bank_power(line: &Vec<u64>, count: usize) -> u64 {
         let reserve = line.len() - count + i + 1;
         idx += left_max_index(&line[idx..reserve]);
         out = out * 10 + line[idx];
-        
+
         idx += 1
     }
     out
