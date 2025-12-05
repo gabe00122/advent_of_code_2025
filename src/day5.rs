@@ -41,10 +41,6 @@ fn part1(puzzle: &Puzzle) -> usize {
         let start_index = ids.partition_point(|&x| x < start_id);
         let stop_index = ids.partition_point(|&x| x <= stop_id);
 
-        if start_index == stop_index {
-            continue;
-        }
-
         output += stop_index - start_index;
         ids.drain(start_index..stop_index);
 
