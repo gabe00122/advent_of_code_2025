@@ -14,7 +14,7 @@ impl Puzzle {
 
         let map: Vec<bool> = input_text
             .chars()
-            .filter(|&c| c  != '\n')
+            .filter(|&c| c != '\n')
             .map(|c| match c {
                 '@' => true,
                 _ => false,
@@ -24,7 +24,11 @@ impl Puzzle {
         let width = input_text.chars().position(|x| x == '\n').unwrap();
         let height = map.len() / width;
 
-        Self { map, width: width as i32, height: height as i32 }
+        Self {
+            map,
+            width: width as i32,
+            height: height as i32,
+        }
     }
 
     fn get_at(&self, x: i32, y: i32) -> bool {
@@ -39,7 +43,7 @@ impl Puzzle {
         self.map[(y * self.width + x) as usize] = value
     }
 
-    fn iter_removable(&self) -> impl Iterator<Item=(i32, i32)> {
+    fn iter_removable(&self) -> impl Iterator<Item = (i32, i32)> {
         iproduct!(0..self.width, 0..self.height)
             .filter(|&(x, y)| self.get_at(x, y))
             .map(|(x, y)| {
