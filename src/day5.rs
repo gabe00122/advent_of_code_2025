@@ -64,7 +64,7 @@ fn part2(puzzle: &Puzzle) -> u64 {
         ranges.push((stop_id + 1, -1)); // convert to exclusive range
     }
 
-    ranges.sort_by_key(|&(id, _)| id); // start will sort before stop because it has -1 even if they land on the same id
+    ranges.sort_by_key(|&(id, _)| id);
 
     let mut last_id = 0;
     let mut nesting_counter = 0;
