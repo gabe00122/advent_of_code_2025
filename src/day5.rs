@@ -39,14 +39,14 @@ fn part1(puzzle: &Puzzle) -> usize {
 
     for &(start_id, stop_id) in puzzle.valid_ranges.iter() {
         let start_index = ids.partition_point(|&x| x < start_id);
-        let stop_index = ids.partition_point(|&x| x <= stop_id) - 1;
+        let stop_index = ids.partition_point(|&x| x <= stop_id);
 
-        if start_index > stop_index {
+        if start_index == stop_index {
             continue;
         }
 
-        output += stop_index - start_index + 1;
-        ids.drain(start_index..=stop_index);
+        output += stop_index - start_index;
+        ids.drain(start_index..stop_index);
 
         if ids.is_empty() {
             break;
@@ -60,11 +60,11 @@ fn part2(puzzle: &Puzzle) -> u64 {
     let mut ranges: Vec<(u64, i32)> = Vec::new();
 
     for &(start_id, stop_id) in puzzle.valid_ranges.iter() {
-        ranges.push((start_id, -1));
-        ranges.push((stop_id, 1));
+        ranges.push((start_id, 1));
+        ranges.push((stop_id + 1, -1)); // convert to exclusive range
     }
 
-    ranges.sort(); // start will sort before stop because it has -1 even if they land on the same id
+    ranges.sort_by_key(|&(id, _)| id); // start will sort before stop because it has -1 even if they land on the same id
 
     let mut last_id = 0;
     let mut nesting_counter = 0;
@@ -75,10 +75,10 @@ fn part2(puzzle: &Puzzle) -> u64 {
             last_id = id;
         }
 
-        nesting_counter -= t; // start is -1 and stop is 1
+        nesting_counter += t;
 
         if nesting_counter == 0 {
-            output += id - last_id + 1;
+            output += id - last_id;
         }
     }
 
