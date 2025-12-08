@@ -68,7 +68,7 @@ impl Puzzle {
     }
 }
 
-fn sovle(puzzle: &mut Puzzle) -> (i64, i64) {
+fn solve(puzzle: &mut Puzzle) -> (i64, i64) {
     let mut part1 = 0;
     let mut queue: VecDeque<(i64, i64)> = VecDeque::new();
 
@@ -104,6 +104,6 @@ fn sovle(puzzle: &mut Puzzle) -> (i64, i64) {
 
 pub fn run() {
     let mut puzzle = Puzzle::load("input/day7.txt");
-    let (part1, part2) = sovle(&mut puzzle);
+    let (part1, part2) = solve(&mut puzzle);
     println!("part1: {}\npart2: {}", part1, part2);
 }
