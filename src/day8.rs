@@ -1,4 +1,4 @@
-use std::{fs, ops::Sub};
+use std::{fs, ops::Sub, time};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 struct Point {
@@ -104,6 +104,10 @@ fn solve(puzzle: &Puzzle, part1_iterations: usize) {
 }
 
 pub fn run() {
+    let start = time::Instant::now();
     let puzzle = Puzzle::load("input/day8.txt");
     solve(&puzzle, 1000);
+
+    let delta = start.elapsed();
+    println!("Time: {:.2?}", delta);
 }
