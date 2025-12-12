@@ -1,6 +1,7 @@
 mod day1;
 mod day10;
 mod day11;
+mod day12;
 mod day2;
 mod day3;
 mod day4;
@@ -31,6 +32,20 @@ fn main() {
         "9" => day9::run(),
         "10" => day10::run(),
         "11" => day11::run(),
+        "12" => day12::run(),
+        "all" => {
+            day1::run();
+            day2::run();
+            day3::run();
+            day4::run();
+            day5::run();
+            day6::run();
+            day7::run();
+            day8::run();
+            day9::run();
+            day10::run();
+            day11::run();
+        }
         _ => println!("'{}' is not a valid day.", args[1]),
     }
 }
