@@ -163,7 +163,8 @@ impl Puzzle {
     }
 
     fn rect_in_polygon(&self, rect: &Rect) -> bool {
-        rect.corners.iter().all(|c| self.point_in_polygon(c)) && !self.polygon.iter().any(|line| rect.cross(line))
+        rect.corners.iter().all(|c| self.point_in_polygon(c))
+            && !self.polygon.iter().any(|line| rect.cross(line))
     }
 }
 
